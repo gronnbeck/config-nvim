@@ -133,33 +133,6 @@ config.setup({
 
 local wk = require("which-key")
 
-local actions = require('telescope.actions')
-
-require("telescope").setup({
-  defaults = {
-    mappings = {
-      i = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-      },
-    },
-  }
-})
-
-local builtin = require('telescope.builtin')
-
-----------------------------------------------
---               KEYBINDINGS                --
-----------------------------------------------
-
-vim.api.nvim_set_keymap('n', '<leader>fs', ':w<CR>', { noremap = true, silent = true, desc = 'Save current file' }) 
-
--- Setting up Telescope bindings
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' }) 
--- Requires ripgrep installed
--- $ brew install ripgrep
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope grep files' })
-
 -- Setting up Neotree opening
 vim.keymap.set('n', '<leader>0', ':Neotree<CR>', { noremap = true, silent = true, desc = 'Open file tree' })
 
@@ -191,7 +164,7 @@ vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { noremap = true, silent = true,
 vim.keymap.set('n', '<leader>bp', ':bprevious<CR>', { noremap = true, silent = true, desc = 'Move to the previous buffer' })
 
 -- Kill (delete) the current buffer
-vim.keymap.set('n', '<leader>bx', ':bdelete<CR>', { noremap = true, silent = true, desc = 'Delete the current buffer' })
+vim.keymap.set('n', '<leader>bx', ':bprevious|bdelete #<CR>', { noremap = true, silent = true, desc = 'Delete the current buffer' })
 
 -- Kill other buffers except the current one
 vim.keymap.set('n', '<leader>b<C-d>', ':%bd|e#|bd#<CR>', { noremap = true, silent = true, desc = 'Kill other buffers except current one' })
@@ -222,6 +195,11 @@ vim.keymap.set('n', '<leader>wJ', '<C-w>J', opts)
 
 -- Move buffer to the top split
 vim.keymap.set('n', '<leader>wK', '<C-w>K', opts)
+
+-- Move to window
+for i = 1, 9 do
+  vim.api.nvim_set_keymap('n', '<Leader>' .. i, ':' .. i .. 'wincmd w<CR>', { noremap = true, silent = true, desc = 'Window ' .. i })
+end
 
 vim.keymap.set('n', '<leader>b1', '<Cmd>BufferGoto 1<CR>', opts)
 vim.keymap.set('n', '<leader>b2', '<Cmd>BufferGoto 2<CR>', opts)
