@@ -7,4 +7,7 @@ vim.cmd("set clipboard+=unnamedplus")
 require("config.lazy")
 require('config.lsp')
 require('config.telescope')
+require('config.lsp-telescope')
 require('config.keybinding-misc')
+
+
