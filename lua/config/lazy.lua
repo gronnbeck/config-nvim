@@ -111,6 +111,7 @@ require("lazy").setup({
       {'hrsh7th/nvim-cmp'},
       {"williamboman/mason.nvim"},
       {"williamboman/mason-lspconfig.nvim"},
+      {"slim-template/vim-slim"},
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
