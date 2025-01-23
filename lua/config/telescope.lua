@@ -25,5 +25,13 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find f
 -- $ brew install ripgrep
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope grep files' })
 
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find help' })
+
 vim.keymap.set('n', '<leader>p', builtin.commands, { desc = 'Telescope commands' })
 
+vim.keymap.set('n', '<leader>ec', function()
+  builtin.find_files {
+    cwd = vim.fn.stdpath('config'),
+    desc = "nvim config files"
+  }
+end)

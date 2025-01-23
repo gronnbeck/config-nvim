@@ -13,12 +13,14 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  -- Replace the language servers listed here 
+  -- Replace the language servers listed here
   -- with the ones you want to install
-  ensure_installed = {'lua_ls', 'pyright', 'ruby_lsp'},
+  ensure_installed = { 'lua_ls', 'pyright', 'ruby_lsp' },
   handlers = {
     function(server_name)
-      require('lspconfig')[server_name].setup({})
+      require('lspconfig')[server_name].setup({
+        capabilities = require('blink.cmp').get_lsp_capabilities()
+      })
     end,
   },
 })
@@ -36,8 +38,5 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end,
       })
     end
-
   end,
 })
-
-

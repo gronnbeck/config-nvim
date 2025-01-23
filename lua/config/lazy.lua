@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -24,10 +24,12 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
+    { import = "config.plugins" },
     -- import your plugins
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+    { "catppuccin/nvim",        name = "catppuccin", priority = 1000 },
     {
-      'nvim-telescope/telescope.nvim', tag = '0.1.8',
+      'nvim-telescope/telescope.nvim',
+      tag = '0.1.8',
       dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {
@@ -48,70 +50,64 @@ require("lazy").setup({
         },
       },
     },
-    {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+    { "nvim-treesitter/nvim-treesitter",  build = ":TSUpdate" },
     {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v3.x",
-        dependencies = {
-          "nvim-lua/plenary.nvim",
-          "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-          "MunifTanjim/nui.nvim",
-          -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-        }
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v3.x",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+        "MunifTanjim/nui.nvim",
+        -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+      }
     },
     {
-        'romgrk/barbar.nvim',
-        dependencies = {
-          'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-          'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-        },
-        init = function() vim.g.barbar_auto_setup = false end,
-        opts = {
-          -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-          -- animation = true,
-          -- insert_at_start = true,
-          -- …etc.
-        },
-        version = '^1.0.0', -- optional: only update when a new 1.x version is released
+      'romgrk/barbar.nvim',
+      dependencies = {
+        'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
+        'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+      },
+      init = function() vim.g.barbar_auto_setup = false end,
+      opts = {
+        -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+        -- animation = true,
+        -- insert_at_start = true,
+        -- …etc.
+      },
+      version = '^1.0.0', -- optional: only update when a new 1.x version is released
     },
-    {'romgrk/barbar.nvim',
-        dependencies = {
-          'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-          'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-        },
-        init = function() vim.g.barbar_auto_setup = false end,
-        opts = {
-          -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-          -- animation = true,
-          -- insert_at_start = true,
-          -- …etc.
-        },
-        version = '^1.0.0', -- optional: only update when a new 1.x version is released
+    {
+      'stevearc/oil.nvim',
+      ---@module 'oil'
+      ---@type oil.SetupOpts
+      opts = {},
+      -- Optional dependencies
+      dependencies = { { "echasnovski/mini.icons", opts = {} } },
+      -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+    },
+    {
+      "jiaoshijie/undotree",
+      dependencies = "nvim-lua/plenary.nvim",
+      config = true,
+      keys = { -- load the plugin only when using it's keybinding:
+        { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
       },
-      {
-          "jiaoshijie/undotree",
-          dependencies = "nvim-lua/plenary.nvim",
-          config = true,
-          keys = { -- load the plugin only when using it's keybinding:
-            { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
-        },
-      },
-      {
-        'tpope/vim-fugitive',
-        config = function()
-            -- Optional: Set up key mappings for common Fugitive commands
-            vim.keymap.set('n', '<leader>gs', ':Git<CR>', { noremap = true, silent = true }) -- Git status
-            vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { noremap = true, silent = true }) -- Git commit
-            vim.keymap.set('n', '<leader>gp', ':Git push<CR>', { noremap = true, silent = true }) -- Git push
-        end
-      },
-      {'VonHeikemen/lsp-zero.nvim', branch = 'v4.x'},
-      {'neovim/nvim-lspconfig'},
-      {'hrsh7th/cmp-nvim-lsp'},
-      {'hrsh7th/nvim-cmp'},
-      {"williamboman/mason.nvim"},
-      {"williamboman/mason-lspconfig.nvim"},
-      {"slim-template/vim-slim"},
+    },
+    {
+      'tpope/vim-fugitive',
+      config = function()
+        -- Optional: Set up key mappings for common Fugitive commands
+        vim.keymap.set('n', '<leader>gs', ':Git<CR>', { noremap = true, silent = true })        -- Git status
+        vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { noremap = true, silent = true }) -- Git commit
+        vim.keymap.set('n', '<leader>gp', ':Git push<CR>', { noremap = true, silent = true })   -- Git push
+      end
+    },
+    { 'VonHeikemen/lsp-zero.nvim',        branch = 'v4.x' },
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'hrsh7th/nvim-cmp' },
+    { "williamboman/mason.nvim" },
+    { "williamboman/mason-lspconfig.nvim" },
+    { "slim-template/vim-slim" },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
@@ -162,13 +158,16 @@ vim.keymap.set('n', '<leader><Tab>', ':b#<CR>', { noremap = true, silent = true,
 vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { noremap = true, silent = true, desc = 'Move to the next buffer' })
 
 -- Move to the previous buffer in the list
-vim.keymap.set('n', '<leader>bp', ':bprevious<CR>', { noremap = true, silent = true, desc = 'Move to the previous buffer' })
+vim.keymap.set('n', '<leader>bp', ':bprevious<CR>',
+  { noremap = true, silent = true, desc = 'Move to the previous buffer' })
 
 -- Kill (delete) the current buffer
-vim.keymap.set('n', '<leader>bx', ':bprevious|bdelete #<CR>', { noremap = true, silent = true, desc = 'Delete the current buffer' })
+vim.keymap.set('n', '<leader>bx', ':bprevious|bdelete #<CR>',
+  { noremap = true, silent = true, desc = 'Delete the current buffer' })
 
 -- Kill other buffers except the current one
-vim.keymap.set('n', '<leader>b<C-d>', ':%bd|e#|bd#<CR>', { noremap = true, silent = true, desc = 'Kill other buffers except current one' })
+vim.keymap.set('n', '<leader>b<C-d>', ':%bd|e#|bd#<CR>',
+  { noremap = true, silent = true, desc = 'Kill other buffers except current one' })
 
 -- Kill all buffers
 vim.keymap.set('n', '<leader>bD', ':%bd|e#<CR>', { noremap = true, silent = true, desc = 'Kill all buffers' })
@@ -177,7 +176,8 @@ vim.keymap.set('n', '<leader>bD', ':%bd|e#<CR>', { noremap = true, silent = true
 vim.keymap.set('n', '<leader>bR', ':e#<CR>', { noremap = true, silent = true, desc = 'Reopen the last closed buffer' })
 
 -- Access the recent files list to reopen a recently closed file
-vim.keymap.set('n', '<leader>fr', ':Telescope oldfiles<CR>', { noremap = true, silent = true, desc = 'Reopen recently closed files' })
+vim.keymap.set('n', '<leader>fr', ':Telescope oldfiles<CR>',
+  { noremap = true, silent = true, desc = 'Reopen recently closed files' })
 
 -- Show information about the current buffer
 vim.keymap.set('n', '<leader>bi', ':echo "Buffer: " . bufname("%")<CR>', opts)
@@ -199,7 +199,8 @@ vim.keymap.set('n', '<leader>wK', '<C-w>K', opts)
 
 -- Move to window
 for i = 1, 9 do
-  vim.api.nvim_set_keymap('n', '<Leader>' .. i, ':' .. i .. 'wincmd w<CR>', { noremap = true, silent = true, desc = 'Window ' .. i })
+  vim.api.nvim_set_keymap('n', '<Leader>' .. i, ':' .. i .. 'wincmd w<CR>',
+    { noremap = true, silent = true, desc = 'Window ' .. i })
 end
 
 vim.keymap.set('n', '<leader>b1', '<Cmd>BufferGoto 1<CR>', opts)
