@@ -18,6 +18,7 @@ local builtin = require('telescope.builtin')
 ----------------------------------------------
 
 vim.api.nvim_set_keymap('n', '<leader>fs', ':w<CR>', { noremap = true, silent = true, desc = 'Save current file' })
+vim.api.nvim_set_keymap('n', '<leader>fS', ':wqall<CR>', { noremap = true, silent = true, desc = 'Save file and quit' })
 
 -- Setting up Telescope bindings
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
