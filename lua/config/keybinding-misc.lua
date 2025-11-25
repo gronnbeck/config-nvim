@@ -8,3 +8,5 @@ end, { noremap = true, silent = true, desc = 'Copy rel path to clipboard' })
 
 vim.keymap.set('n', '<leader>tr', ":Neotree reveal<CR>", { noremap = true, silent = true, desc = 'Reveal file in tree' })
 vim.keymap.set('n', '<leader>-', ":Oil .<CR>", { noremap = true, silent = true, desc = 'Open oil' })
+
+vim.keymap.set('n', '<leader>hn', ":noh<CR>", { noremap = true, silent = true, desc = 'Reset highlights' })

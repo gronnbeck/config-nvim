@@ -9,6 +9,12 @@ vim.cmd("set nu rnu")
 vim.cmd("inoremap <CR> <CR>x<BS>")
 vim.cmd("set nowrap")
 
+vim.filetype.add({
+  extension = {
+    bb = "clojure",
+  },
+})
+
 require("config.lazy")
 require('config.lsp')
 require('config.telescope')
